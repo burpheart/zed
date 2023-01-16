@@ -141,8 +141,11 @@ func (s *scanner) Read() (*zed.Value, error) {
 			return nil, err
 		}
 		this, err := s.reader.Read()
-		if err != nil || this == nil {
-			return nil, err
+		if err != nil {
+			continue // skip parser err
+			//return nil, err
+		} else if this == nil {
+			return nil, nil
 		}
 		atomic.AddInt64(&s.progress.BytesRead, int64(len(this.Bytes)))
 		atomic.AddInt64(&s.progress.RecordsRead, 1)
