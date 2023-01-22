@@ -152,6 +152,9 @@ func CopyWithContext(ctx context.Context, dst Writer, src Reader) error {
 			return err
 		}
 		rec, err := src.Read()
+		if err != nil && err != io.EOF {
+			continue // skip parser err
+		}
 		if err != nil || rec == nil {
 			return err
 		}

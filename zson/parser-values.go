@@ -25,6 +25,8 @@ func (p *Parser) ParseValue() (astzed.Value, error) {
 			p.lexer.skipLine()
 			return nil, errors.New("ZSON syntax error")
 		}
+	} else if err != nil && err != io.EOF {
+		p.lexer.skipLine()
 	}
 	return v, err
 }
